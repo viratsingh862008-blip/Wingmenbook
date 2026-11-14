@@ -76,19 +76,14 @@ function App() {
   const previous = () => setActive((current) => getPreviousChapter(current));
 
   return (
-    <main className={`book-shell chapter-${chapter.kind}`} style={{ "--accent": chapter.kind === "people" ? team[active % team.length].accent : "#d6a33d" } as CSSProperties}>
+    <main className={`book-shell chapter-${chapter.kind}`} style={{ "--accent": chapter.kind === "people" ? team[active % team.length].accent : "#d71920" } as CSSProperties}>
       <div className="ambient ambient-one" /><div className="ambient ambient-two" />
       <header className="topbar">
         <a className="wordmark" href="#cover" onClick={(e) => { e.preventDefault(); go(0); }} aria-label="4WINGMEN home">
           <span className="mark-four">4</span><span className="mark-wing">WING</span><span className="mark-men">MEN</span>
         </a>
         <div className="top-center"><span>MARKETING</span><i /> <span>STRATEGY</span><i /> <span>CREATIVITY</span><i /> <span>GROWTH</span></div>
-        <div className="top-actions">
-          <button className="icon-button" onClick={() => setSoundEnabled((v) => !v)} aria-label={soundEnabled ? "Mute sound" : "Enable sound"} title={soundEnabled ? "Mute sound" : "Sound off"}>
-            {soundEnabled ? <Volume2 size={17} /> : <VolumeX size={17} />}
-          </button>
-          <button className="icon-button" onClick={() => setMenuOpen(true)} aria-label="Open chapter index"><Grid2X2 size={18} /></button>
-        </div>
+        <div className="top-actions">\n          <button className="icon-button" onClick={() => setMenuOpen(true)} aria-label="Open chapter index"><Grid2X2 size={18} /></button>\n        </div>
       </header>
 
       <div className="progress-track"><span style={{ width: `${progress}%` }} /></div>
