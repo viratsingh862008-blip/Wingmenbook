@@ -65,7 +65,7 @@ Serves the original supplied assets via HTTPS. The current app uses static, vers
 ## 5. Navigation and input model
 - Guided mode offers sequential previous/next navigation.
 - Free mode exposes an accessible chapter index for direct chapter selection.
-- Arrow keys navigate only when focus is not in an interactive or editable target.
+- Unmodified left/right arrows navigate only when focus is not in an interactive or editable target; Shift/Alt/Ctrl/Meta combinations are preserved for browser and text-selection behaviour.
 - Horizontal pointer/touch swipe has a movement threshold and ignores starts/ends on controls and links.
 - The index dialog has initial focus, Escape close, focus trapping and focus return.
 - The progress indicator exposes a numeric progress value to assistive technology.
@@ -94,7 +94,7 @@ Serves the original supplied assets via HTTPS. The current app uses static, vers
 - Review network and browser rendering in the Vercel preview before release.
 
 ## 9. Testing and verification
-- 12 unit tests for chapter clamping, keyboard-target guards, swipe-direction detection and forward/backward page-turn direction.
+- 13 unit tests for chapter clamping, keyboard-target guards (including modified shortcuts), swipe-direction detection and forward/backward page-turn direction.
 - GitHub Actions executes `npm test` and `npm run build`.
 - Browser QA should cover 320px, 390px, 768px, 1024px and 1440px widths.
 - Check opening-cover interaction, page-turn direction/lock, keyboard focus, chapter index, mobile swipe and pinch zoom, reduced-motion, image loading and outbound contact link.

@@ -27,13 +27,13 @@ The posters are full editorial compositions with embedded typography; display th
 ## Implementation decisions
 1. Reuse React/Vite/TypeScript/GSAP; do not introduce Three.js unless a measured effect requires it.
 2. Use semantic HTML for text and controls, and verified Cloudinary URLs for poster assets.
-9. Add a CSS 3D opening cover and direction-aware hinged chapter transitions; lock navigation until each transition completes.
 3. Replace the nonfunctional sound toggle with a motion preference control; audio is deferred until an approved sound asset exists.
 4. Make guided mode sequential and free mode chapter-index-driven; next/previous remain available in both modes.
 5. Add touch/pointer swipe navigation with a conservative threshold and interactive-element guards.
 6. Respect reduced-motion preferences and clean up timelines/listeners.
 7. Add chapter announcements and accessible chapter-index focus handling.
 8. Keep portfolio placeholders and client-experience disclaimers intact.
+9. Add a clickable CSS 3D opening cover and direction-aware hinged chapter transitions; lock navigation while either cover or page animation runs.
 
 ## Slices
 ### Slice 1 — Content and asset integrity
@@ -55,7 +55,7 @@ The posters are full editorial compositions with embedded typography; display th
 
 ### Slice 4 — Docs and quality
 - Update README, asset inventory and roadmap.
-- Run 12 tests, TypeScript build and Vite production build through CI.
+- Run 13 tests, TypeScript build and Vite production build through CI.
 - Run the five-axis code review: correctness, readability, architecture, security and performance.
 - Capture desktop/mobile preview screenshots where deployment access permits.
 
@@ -68,7 +68,7 @@ The posters are full editorial compositions with embedded typography; display th
 - Reduced-motion users get the same content/navigation without large animation.
 - No sound toggle appears until audio is actually implemented.
 - Portfolio and 10+ collective experience statements remain accurately qualified.
-- 12 CI tests and production build pass before merging.
+- 13 CI tests and production build pass before merging.
 - Preview is visually checked on desktop and mobile.
 
 ## Risks and limits
@@ -79,10 +79,10 @@ The posters are full editorial compositions with embedded typography; display th
 
 ## Implementation addendum — reference-matched book opening and page motion
 
-- The opening screen uses a centered CSS 3D book object with a user-triggered hinged cover animation.
+- The opening screen uses a centered CSS 3D book object with a user-triggered hinged cover animation; the book itself is a keyboard-accessible button.
 - After opening, the eleven content chapters remain semantic HTML and use GSAP direction-aware rotation/translation to suggest a page turn.
 - Navigation is locked during page movement to prevent rapid input from skipping chapters.
 - The motion preference can bypass the cover animation and chapter movement.
 - The neutral page-level accent system remains restrained; member-specific warm accents stay scoped to supplied posters and selected details.
-- The latest code commit passed 12 Vitest tests and the TypeScript/Vite production build.
+- The latest code commit passed 13 Vitest tests and the TypeScript/Vite production build.
 - The Vercel preview is READY but protected by SSO; external browser visual QA remains an explicit release gate.

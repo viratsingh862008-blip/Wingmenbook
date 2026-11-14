@@ -35,7 +35,7 @@ The implementation must be original. Do not copy the reference site's source cod
 ## 4. Implemented interaction states
 The current build includes:
 - Cover ready.
-- Cover opening after explicit activation.
+- Cover opening after explicit activation by either the book surface or its Open button.
 - Chapter idle.
 - Chapter transition forward/backward.
 - Transition lock to prevent accidental multi-step navigation.
@@ -59,7 +59,7 @@ The current build includes:
 
 ### Keyboard
 - Provide visible focus indicators.
-- Left/right arrows navigate only when focus is not inside a text input or another control that uses those keys.
+- Unmodified left/right arrows navigate only when focus is not inside a text input or another control that uses those keys; modified shortcuts and Shift+Arrow text selection remain native.
 - Enter/Space activates focused controls.
 - Escape may close chapter navigation or overlays if those are implemented.
 

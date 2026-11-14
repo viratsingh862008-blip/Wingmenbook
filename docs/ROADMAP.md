@@ -27,11 +27,11 @@
 - [x] Add horizontal pointer/touch swipe detection.
 - [x] Add chapter progress and screen-reader chapter announcements.
 - [x] Add focus entry/return and Escape/focus-trap behaviour for the chapter index.
-- [x] Add a CSS 3D book cover that opens with a GSAP hinge after user activation.
+- [x] Add a centered CSS 3D book cover that opens when the book surface or Open button is activated.
 - [x] Add direction-aware hinged chapter transitions and lock navigation while transitions run.
 - [x] Add GSAP progressive content reveals.
 - [x] Add system-aware and user-toggleable reduced-motion mode.
-- [x] Confirm GitHub Actions tests and the TypeScript/Vite production build pass on the latest implementation commit (12 tests).
+- [x] Confirm GitHub Actions tests and the TypeScript/Vite production build pass on the latest implementation commit (13 tests).
 - [ ] Check preview screenshots at desktop and mobile viewports.
 
 ## Phase 3 — Signature visual refinement
@@ -50,7 +50,7 @@
 - [ ] Replace the placeholder only after portfolio evidence is approved.
 
 ## Phase 5 — Release QA
-- [x] Confirm GitHub Actions tests and TypeScript/Vite production build are green (12 tests on the latest code commit).
+- [x] Confirm GitHub Actions tests and TypeScript/Vite production build are green (13 tests on the latest code commit).
 - [ ] Complete logged-in desktop and mobile browser QA (the current preview URL is protected by Vercel SSO).
 - [ ] Check keyboard focus order, menu focus trap and screen-reader announcements.
 - [ ] Check reduced-motion behaviour.

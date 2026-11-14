@@ -26,7 +26,8 @@ GitHub Actions runs the tests and production build on pushes to `main` and `buil
 - Keyboard arrow navigation that does not hijack editable or interactive elements.
 - Touch/pointer horizontal swipe navigation with a conservative threshold.
 - Chapter progress, active chapter state and focus-managed chapter index.
-- CSS 3D book cover that opens on user action, with GSAP-driven motion.
+- A centered 3D book cover that opens by clicking the book itself or the Open button, with keyboard-accessible focus.
+- CSS/GSAP cover-opening animation with navigation locked until the cover completes its turn.
 - Direction-aware hinged chapter transitions with a transition lock to prevent accidental double navigation.
 - GSAP progressive content reveals.
 - Reduced-motion support that follows the system preference and can be toggled in the interface.
