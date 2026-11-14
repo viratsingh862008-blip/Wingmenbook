@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { getNextChapter, getPreviousChapter, clampChapterIndex } from "./navigation";
+import {
+  getNextChapter,
+  getPreviousChapter,
+  clampChapterIndex,
+  getSwipeDirection,
+  shouldNavigateWithKeyboard
+} from "./navigation";
 
 describe("chapter navigation", () => {
   it("advances to the next chapter without exceeding the final chapter", () => {
@@ -15,5 +21,44 @@ describe("chapter navigation", () => {
   it("clamps arbitrary chapter indexes to the valid range", () => {
     expect(clampChapterIndex(-2, 4)).toBe(0);
     expect(clampChapterIndex(9, 4)).toBe(3);
+    expect(clampChapterIndex(0, 0)).toBe(0);
+  });
+});
+
+describe("keyboard navigation guards", () => {
+  it("accepts left and right arrows from non-interactive content", () => {
+    expect(shouldNavigateWithKeyboard("ArrowRight", { tagName: "SECTION" })).toBe(true);
+    expect(shouldNavigateWithKeyboard("ArrowLeft", { tagName: "MAIN" })).toBe(true);
+  });
+
+  it("does not hijack arrows from editable or interactive elements", () => {
+    for (const tagName of ["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"]) {
+      expect(shouldNavigateWithKeyboard("ArrowRight", { tagName })).toBe(false);
+    }
+    expect(shouldNavigateWithKeyboard("ArrowLeft", { tagName: "DIV", isContentEditable: true })).toBe(false);
+    expect(shouldNavigateWithKeyboard("ArrowLeft", null)).toBe(true);
+  });
+
+  it("ignores keys other than the chapter arrow keys", () => {
+    expect(shouldNavigateWithKeyboard("Enter", { tagName: "MAIN" })).toBe(false);
+  });
+});
+
+describe("swipe navigation", () => {
+  it("moves forward on a sufficiently long left swipe", () => {
+    expect(getSwipeDirection(220, 100, 120, 105)).toBe("next");
+  });
+
+  it("moves backward on a sufficiently long right swipe", () => {
+    expect(getSwipeDirection(100, 100, 210, 104)).toBe("previous");
+  });
+
+  it("ignores short or mostly vertical gestures", () => {
+    expect(getSwipeDirection(100, 100, 135, 102)).toBe(null);
+    expect(getSwipeDirection(100, 100, 80, 170)).toBe(null);
+  });
+
+  it("uses a safe threshold for slow smaller movements", () => {
+    expect(getSwipeDirection(100, 100, 35, 105, 70)).toBe(null);
   });
 });
