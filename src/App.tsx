@@ -371,7 +371,14 @@ function App() {
           <span>{chapter.eyebrow}</span>
           <span>{String(active + 1).padStart(2, "0")} <b>/</b> {String(chapters.length).padStart(2, "0")}</span>
         </div>
-        {chapter.kind === "cover" && <Cover onBegin={next} reducedMotion={motionReduced} />}
+        {chapter.kind === "cover" && (
+          <Cover
+            onBegin={next}
+            reducedMotion={motionReduced}
+            onOpening={() => { navigationLockRef.current = true; setIsTransitioning(true); }}
+            onOpened={() => { navigationLockRef.current = false; setIsTransitioning(false); }}
+          />
+        )}
         {chapter.kind === "people" && <People />}
         {chapter.kind === "services" && <Services />}
         {chapter.kind === "disciplines" && <Disciplines />}
@@ -445,7 +452,17 @@ function App() {
   );
 }
 
-function Cover({ onBegin, reducedMotion }: { onBegin: () => void; reducedMotion: boolean }) {
+function Cover({
+  onBegin,
+  reducedMotion,
+  onOpening,
+  onOpened
+}: {
+  onBegin: () => void;
+  reducedMotion: boolean;
+  onOpening: () => void;
+  onOpened: () => void;
+}) {
   const frontRef = useRef<HTMLDivElement | null>(null);
   const [opening, setOpening] = useState(false);
 
@@ -456,13 +473,17 @@ function Cover({ onBegin, reducedMotion }: { onBegin: () => void; reducedMotion:
       return;
     }
 
+    onOpening();
     setOpening(true);
     gsap.to(frontRef.current, {
       rotateY: -154,
       duration: 1.05,
       ease: "power3.inOut",
       transformOrigin: "left center",
-      onComplete: onBegin
+      onComplete: () => {
+        onOpened();
+        onBegin();
+      }
     });
   };
 
