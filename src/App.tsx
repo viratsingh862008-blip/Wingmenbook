@@ -189,7 +189,7 @@ function App() {
     const onKeyDown = (event: KeyboardEvent) => {
       if (menuOpen || navigationLockRef.current) return;
       const target = event.target instanceof HTMLElement ? event.target : null;
-      if (!shouldNavigateWithKeyboard(event.key, target)) return;
+      if (!shouldNavigateWithKeyboard(event.key, target, event)) return;
 
       event.preventDefault();
       if (event.key === "ArrowRight") next();
