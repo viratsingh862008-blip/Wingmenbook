@@ -9,7 +9,7 @@
 .top-center{display:flex;align-items:center;gap:15px;font-size:9px;letter-spacing:.3em;color:#aaa}.top-center i{width:4px;height:4px;border-radius:50%;background:var(--accent)}
 .top-actions{display:flex;gap:10px}.icon-button{width:38px;height:38px;display:grid;place-items:center;background:#ffffff08;border:1px solid #ffffff26;border-radius:50%;cursor:pointer;transition:.25s}.icon-button:hover{border-color:var(--accent);color:var(--accent)}
 .progress-track{height:2px;background:#ffffff16;position:relative;z-index:3}.progress-track span{height:100%;display:block;background:var(--accent);transition:width .55s cubic-bezier(.2,.7,.2,1)}
-.stage{position:relative;height:calc(100dvh - 150px);min-height:460px;padding:4.5vh 7vw 3vh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y;transform-origin:50% 55%;}
+.stage{position:relative;height:calc(100dvh - 150px);min-height:460px;padding:4.5vh 7vw 3vh;overflow:auto;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;transform-origin:50% 55%;}
 @keyframes stage-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .chapter-meta{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.25em;color:#aaa;position:relative;z-index:1}.chapter-meta b{color:var(--accent);padding:0 7px}
 .bottom-bar{height:66px;border-top:1px solid #ffffff1c;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 4.2vw;position:relative;z-index:2;background:#090909a8}
