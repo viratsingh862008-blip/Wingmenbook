@@ -15,7 +15,7 @@
 |---|---|---|
 | Application | React 18 + Vite + TypeScript | Chapter shell, content and interaction state |
 | Styling | Custom CSS | Visual system, editorial layouts and responsive behaviour |
-| Motion | GSAP | Chapter transitions and progressive reveal choreography |
+| Motion | CSS 3D transforms + GSAP | Opening cover hinge, direction-aware page movement and progressive reveal choreography |
 | Icons | Lucide React | Interface icons |
 | Tests | Vitest | Navigation helper and input-behaviour tests |
 | Asset hosting | Cloudinary | Original team poster and logo delivery |
@@ -54,10 +54,10 @@ Keep future components and modules focused. Avoid creating abstractions or direc
 Owns chapter data, semantic headings, selectable text, accessible controls, current chapter state, the chapter index, image alt text, focus management, responsive structure and error states.
 
 ### CSS layer
-Owns the editorial layout, responsive type and spacing, visual accents, poster containment, focus visibility and no-motion fallback.
+Owns the editorial layout, responsive type and spacing, visual accents, poster containment, the CSS 3D cover geometry, focus visibility and no-motion fallback.
 
 ### GSAP layer
-Owns chapter enter transitions and progressive reveal effects. Every animation context is reverted on cleanup. It must not mutate the same element properties independently from React state.
+Owns the opening-cover hinge, direction-aware chapter page movement and progressive reveal effects. The cover opens only after user activation. Chapter navigation is locked during the transition and unlocked on completion. Animation contexts are reverted on cleanup; GSAP must not mutate the same element properties independently from React state.
 
 ### Cloudinary
 Serves the original supplied assets via HTTPS. The current app uses static, versioned URLs; no API key or client-side secret is required.
@@ -94,10 +94,10 @@ Serves the original supplied assets via HTTPS. The current app uses static, vers
 - Review network and browser rendering in the Vercel preview before release.
 
 ## 9. Testing and verification
-- Unit tests for chapter clamping, keyboard-target guards and swipe-direction detection.
+- 12 unit tests for chapter clamping, keyboard-target guards, swipe-direction detection and forward/backward page-turn direction.
 - GitHub Actions executes `npm test` and `npm run build`.
 - Browser QA should cover 320px, 390px, 768px, 1024px and 1440px widths.
-- Check keyboard focus, chapter index, mobile swipe, reduced-motion, image loading and outbound contact link.
+- Check opening-cover interaction, page-turn direction/lock, keyboard focus, chapter index, mobile swipe and pinch zoom, reduced-motion, image loading and outbound contact link.
 - Review correctness, readability, architecture, security and performance before merging.
 
 ## 10. Deployment

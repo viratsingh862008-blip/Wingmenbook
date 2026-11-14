@@ -1,6 +1,6 @@
 # 4WINGMEN Interactive Brand Book — Roadmap
 
-**Status:** Core implementation on a build branch; quality and visual verification in progress.
+**Status:** Core interactions implemented on a build branch; automated checks pass; logged-in visual QA remains outstanding.
 
 ## Phase 0 — Planning and source audit
 - [x] Confirm hybrid editorial/book experience.
@@ -27,13 +27,15 @@
 - [x] Add horizontal pointer/touch swipe detection.
 - [x] Add chapter progress and screen-reader chapter announcements.
 - [x] Add focus entry/return and Escape/focus-trap behaviour for the chapter index.
-- [x] Add GSAP chapter transitions and progressive content reveals.
+- [x] Add a CSS 3D book cover that opens with a GSAP hinge after user activation.
+- [x] Add direction-aware hinged chapter transitions and lock navigation while transitions run.
+- [x] Add GSAP progressive content reveals.
 - [x] Add system-aware and user-toggleable reduced-motion mode.
-- [ ] Confirm full pipeline passes on the latest build commit.
+- [x] Confirm GitHub Actions tests and the TypeScript/Vite production build pass on the latest implementation commit (12 tests).
 - [ ] Check preview screenshots at desktop and mobile viewports.
 
 ## Phase 3 — Signature visual refinement
-- [ ] Compare cover, chapter compositions, spacing and transitions against the reference interaction checklist.
+- [ ] Compare the new 3D opening cover, chapter compositions, spacing and page movement against the reference interaction checklist.
 - [ ] Tune image sizing and typography at 320px, 390px, 768px, 1024px and 1440px.
 - [ ] Validate poster visibility and image loading in the deployed preview.
 - [ ] Add a WebGL/GLSL prototype only if a specific visual requirement cannot be achieved cleanly with CSS and GSAP.
@@ -48,13 +50,14 @@
 - [ ] Replace the placeholder only after portfolio evidence is approved.
 
 ## Phase 5 — Release QA
-- [ ] Confirm GitHub Actions tests and TypeScript/Vite production build are green.
-- [ ] Complete desktop and mobile browser QA.
+- [x] Confirm GitHub Actions tests and TypeScript/Vite production build are green (12 tests on the latest code commit).
+- [ ] Complete logged-in desktop and mobile browser QA (the current preview URL is protected by Vercel SSO).
 - [ ] Check keyboard focus order, menu focus trap and screen-reader announcements.
 - [ ] Check reduced-motion behaviour.
 - [ ] Check broken-image/network errors and image-loading performance.
 - [ ] Confirm Instagram CTA destination.
-- [ ] Verify Vercel preview and production deployment.
+- [x] Verify the Vercel preview deployment reaches READY state (preview remains SSO-protected).
+- [ ] Merge to main and verify the production deployment after visual review.
 - [ ] Review all factual content against `MANUSCRIPT.md`.
 
 ## Technical scope decision
