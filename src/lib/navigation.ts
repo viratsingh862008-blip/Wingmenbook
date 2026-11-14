@@ -17,9 +17,11 @@ const INTERACTIVE_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"])
 
 export function shouldNavigateWithKeyboard(
   key: string,
-  target: KeyboardNavigationTarget = null
+  target: KeyboardNavigationTarget = null,
+  modifiers: { shiftKey?: boolean; altKey?: boolean; ctrlKey?: boolean; metaKey?: boolean } = {}
 ): boolean {
   if (key !== "ArrowLeft" && key !== "ArrowRight") return false;
+  if (modifiers.shiftKey || modifiers.altKey || modifiers.ctrlKey || modifiers.metaKey) return false;
   if (target?.isContentEditable) return false;
 
   const tagName = target?.tagName?.toUpperCase();
