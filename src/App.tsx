@@ -508,8 +508,8 @@ function Cover({
               <p className="cover-book-kicker">INTEGRATED GROWTH AGENCY</p>
               <h1>4WINGMEN</h1>
               <p className="cover-book-title">IDEAS THAT <em>FLY.</em></p>
-              <span className="cover-book-tagline">OWN THE SCENE. STAY SUPREME.</span>
-              <span className="cover-book-edition">EST. / 04</span>
+              <span className="cover-book-tagline">OWN THE SCENE, STAY SUPREME.</span>
+              <span className="cover-book-edition">EDITION / 01</span>
             </div>
           </div>
         </button>
@@ -659,7 +659,7 @@ function Contact() {
       <a className="instagram-cta" href="https://www.instagram.com/4wingmen?vrfl=MW44aWNwcWlmdTFvNg==" target="_blank" rel="noopener noreferrer">
         <Instagram size={19} /> DM 4WINGMEN <ArrowUpRight size={19} />
       </a>
-      <span className="contact-foot">OWN THE SCENE. STAY SUPREME.</span>
+      <span className="contact-foot">OWN THE SCENE, STAY SUPREME.</span>
     </div>
   );
 }
