@@ -12,11 +12,12 @@ npm run dev
 ## Quality checks
 
 ```bash
+npm audit --audit-level=low
 npm test
 npm run build
 ```
 
-GitHub Actions runs the tests and production build on Node.js 26 LTS for pushes to `main` and `build/**`, and on pull requests targeting `main`.
+GitHub Actions runs a dependency audit, the tests and the production build on Node.js 26 LTS for pushes to `main` and `build/**`, and on pull requests targeting `main`.
 
 ## Experience
 

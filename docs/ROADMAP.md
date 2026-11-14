@@ -33,7 +33,7 @@
 - [x] Add system-aware and user-toggleable reduced-motion mode.
 - [x] Add React component tests covering cover opening, guided/free mode, chapter index, Escape handling and keyboard guards.
 - [x] Move CI to Node.js 26 LTS.
-- [x] Confirm GitHub Actions helper/component tests and the TypeScript/Vite production build pass (19 tests).
+- [x] Confirm GitHub Actions dependency audit reports zero vulnerabilities, all 19 helper/component tests pass, and the TypeScript/Vite production build passes.
 - [ ] Check preview screenshots at desktop and mobile viewports.
 
 ## Phase 3 — Signature visual refinement

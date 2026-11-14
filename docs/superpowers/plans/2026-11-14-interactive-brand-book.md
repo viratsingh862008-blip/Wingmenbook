@@ -84,6 +84,6 @@ The posters are full editorial compositions with embedded typography; display th
 - Navigation is locked during page movement to prevent rapid input from skipping chapters.
 - The motion preference can bypass the cover animation and chapter movement.
 - The neutral page-level accent system remains restrained; member-specific warm accents stay scoped to supplied posters and selected details.
-- The latest completed code test run passed 19 Vitest tests and the TypeScript/Vite production build.
+- The latest completed security-audit run reported zero vulnerabilities; all 19 Vitest tests and the TypeScript/Vite production build passed.
 - The Vercel preview is READY but protected by SSO; external browser visual QA remains an explicit release gate.
 - The approved cover tagline has been aligned to the manuscript wording, and an unconfirmed establishment-date-style label was replaced with an edition marker.

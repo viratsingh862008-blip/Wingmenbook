@@ -18,6 +18,6 @@ jobs:
         with:
           node-version: 26
       - run: npm install --no-audit --no-fund
-      - run: npm audit --audit-level=high
+      - run: npm audit --audit-level=low
       - run: npm test
       - run: npm run build

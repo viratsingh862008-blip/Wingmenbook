@@ -95,7 +95,7 @@ Serves the original supplied assets via HTTPS. The current app uses static, vers
 
 ## 9. Testing and verification
 - 13 unit tests for chapter clamping, keyboard-target guards (including modified shortcuts), swipe-direction detection and forward/backward page-turn direction.
-- GitHub Actions runs on Node.js 26 LTS and executes `npm install`, `npm test` (19 tests) and `npm run build`.
+- GitHub Actions runs on Node.js 26 LTS and executes `npm install`, `npm audit --audit-level=low` (zero vulnerabilities in the latest completed audit), `npm test` (19 tests) and `npm run build`.
 - Browser QA should cover 320px, 390px, 768px, 1024px and 1440px widths.
 - Check opening-cover interaction, page-turn direction/lock, keyboard focus, chapter index, mobile swipe and pinch zoom, reduced-motion, image loading and outbound contact link.
 - Review correctness, readability, architecture, security and performance before merging.
