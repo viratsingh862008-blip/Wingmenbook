@@ -11,7 +11,7 @@ export function getPreviousChapter(index: number): number {
   return Math.max(index - 1, 0);
 }
 
-type KeyboardNavigationTarget = Pick<HTMLElement, "tagName" | "isContentEditable"> | null;
+type KeyboardNavigationTarget = { tagName?: string; isContentEditable?: boolean } | null;
 
 const INTERACTIVE_TAGS = new Set(["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"]);
 
