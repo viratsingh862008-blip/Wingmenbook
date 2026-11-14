@@ -4,6 +4,7 @@ import {
   getPreviousChapter,
   clampChapterIndex,
   getSwipeDirection,
+  getTransitionDirection,
   shouldNavigateWithKeyboard
 } from "./navigation";
 
@@ -41,6 +42,17 @@ describe("keyboard navigation guards", () => {
 
   it("ignores keys other than the chapter arrow keys", () => {
     expect(shouldNavigateWithKeyboard("Enter", { tagName: "MAIN" })).toBe(false);
+  });
+});
+
+describe("page-turn direction", () => {
+  it("uses forward direction for the next or current chapter", () => {
+    expect(getTransitionDirection(0, 1)).toBe(1);
+    expect(getTransitionDirection(2, 2)).toBe(1);
+  });
+
+  it("uses backward direction for earlier chapters", () => {
+    expect(getTransitionDirection(3, 1)).toBe(-1);
   });
 });
 
