@@ -470,20 +470,28 @@ function Cover({ onBegin, reducedMotion }: { onBegin: () => void; reducedMotion:
     <div className="cover-layout">
       <div className="cover-stage-kicker">4W / AN INTERACTIVE BRAND BOOK</div>
       <div className="cover-book-scene">
-        <div className="cover-book" aria-label="A closed 4WINGMEN brand book">
-          <div className="cover-book-back" aria-hidden="true" />
-          <div className="cover-book-pages" aria-hidden="true" />
-          <div className="cover-book-spine" aria-hidden="true" />
-          <div className="cover-book-front" ref={frontRef}>
-            <div className="cover-front-rule" />
-            <img src={assets.logo} alt="4WINGMEN official logo" />
-            <p className="cover-book-kicker">INTEGRATED GROWTH AGENCY</p>
-            <h1>4WINGMEN</h1>
-            <p className="cover-book-title">IDEAS THAT <em>FLY.</em></p>
-            <span className="cover-book-tagline">OWN THE SCENE. STAY SUPREME.</span>
-            <span className="cover-book-edition">EST. / 04</span>
+        <button
+          className="cover-book-action"
+          type="button"
+          onClick={openBook}
+          disabled={opening}
+          aria-label="Open the 4WINGMEN brand book"
+        >
+          <div className="cover-book" aria-hidden="true">
+            <div className="cover-book-back" />
+            <div className="cover-book-pages" />
+            <div className="cover-book-spine" />
+            <div className="cover-book-front" ref={frontRef}>
+              <div className="cover-front-rule" />
+              <img src={assets.logo} alt="" />
+              <p className="cover-book-kicker">INTEGRATED GROWTH AGENCY</p>
+              <h1>4WINGMEN</h1>
+              <p className="cover-book-title">IDEAS THAT <em>FLY.</em></p>
+              <span className="cover-book-tagline">OWN THE SCENE. STAY SUPREME.</span>
+              <span className="cover-book-edition">EST. / 04</span>
+            </div>
           </div>
-        </div>
+        </button>
       </div>
       <div className="cover-lower">
         <p>CREATIVE / TECHNOLOGY / MARKETING / STRATEGY</p>
