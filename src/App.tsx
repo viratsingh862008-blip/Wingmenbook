@@ -138,10 +138,8 @@ function App() {
   const previous = () => setActive((current) => getPreviousChapter(current));
 
   const toggleReadingMode = () => {
-    setIsGuided((current) => {
-      if (!current) setMenuOpen(false);
-      return !current;
-    });
+    if (!isGuided) setMenuOpen(false);
+    setIsGuided((current) => !current);
   };
 
   const toggleMotion = () => {
