@@ -304,3 +304,15 @@ button:focus-visible,a:focus-visible,[tabindex="0"]:focus-visible{outline:2px so
   .cover-book-tagline{bottom:24px}
   .cover-lower{gap:7px}
 }
+
+.cover-book-action{
+  display:block;
+  padding:0;
+  border:0;
+  background:transparent;
+  overflow:visible;
+  cursor:pointer;
+  transform:translateZ(0);
+}
+.cover-book-action:disabled{cursor:wait}
+.cover-book-action:focus-visible{outline:2px solid #d71920;outline-offset:12px;border-radius:3px}
