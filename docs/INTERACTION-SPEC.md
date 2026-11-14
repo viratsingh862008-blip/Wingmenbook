@@ -89,4 +89,4 @@ A prototype passes when:
 - Resize and orientation changes are handled.
 - Reduced-motion mode is usable.
 - WebGL failure does not make the book unusable.
-- The experience is checked against reference recordings/screenshots using a documented visual review. The implementation branch preview is currently SSO-protected, so this check requires an authenticated project reviewer.
+- Component-level tests cover the cover activation, guided/free switching, chapter-index selection, Escape close and keyboard guards. The experience is still checked against reference recordings/screenshots using a documented visual review. The implementation branch preview is currently SSO-protected, so visual review requires an authenticated project reviewer.

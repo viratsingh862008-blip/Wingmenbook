@@ -55,7 +55,7 @@ The posters are full editorial compositions with embedded typography; display th
 
 ### Slice 4 — Docs and quality
 - Update README, asset inventory and roadmap.
-- Run 13 tests, TypeScript build and Vite production build through CI.
+- Run 19 tests (13 navigation-helper + 6 React component tests), TypeScript build and Vite production build through CI on Node.js 26 LTS.
 - Run the five-axis code review: correctness, readability, architecture, security and performance.
 - Capture desktop/mobile preview screenshots where deployment access permits.
 
@@ -68,7 +68,7 @@ The posters are full editorial compositions with embedded typography; display th
 - Reduced-motion users get the same content/navigation without large animation.
 - No sound toggle appears until audio is actually implemented.
 - Portfolio and 10+ collective experience statements remain accurately qualified.
-- 13 CI tests and production build pass before merging.
+- All 19 CI tests and production build pass before merging.
 - Preview is visually checked on desktop and mobile.
 
 ## Risks and limits
@@ -84,5 +84,6 @@ The posters are full editorial compositions with embedded typography; display th
 - Navigation is locked during page movement to prevent rapid input from skipping chapters.
 - The motion preference can bypass the cover animation and chapter movement.
 - The neutral page-level accent system remains restrained; member-specific warm accents stay scoped to supplied posters and selected details.
-- The latest code commit passed 13 Vitest tests and the TypeScript/Vite production build.
+- The latest completed code test run passed 19 Vitest tests and the TypeScript/Vite production build.
 - The Vercel preview is READY but protected by SSO; external browser visual QA remains an explicit release gate.
+- The approved cover tagline has been aligned to the manuscript wording, and an unconfirmed establishment-date-style label was replaced with an edition marker.

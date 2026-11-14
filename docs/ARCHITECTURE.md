@@ -17,7 +17,7 @@
 | Styling | Custom CSS | Visual system, editorial layouts and responsive behaviour |
 | Motion | CSS 3D transforms + GSAP | Opening cover hinge, direction-aware page movement and progressive reveal choreography |
 | Icons | Lucide React | Interface icons |
-| Tests | Vitest | Navigation helper and input-behaviour tests |
+| Tests | Vitest + React Testing Library + jsdom | Navigation helper tests and React component interaction tests |
 | Asset hosting | Cloudinary | Original team poster and logo delivery |
 | CI | GitHub Actions | Dependency install, tests and TypeScript/Vite build |
 | Deployment | Vercel | Preview and production hosting |
@@ -95,7 +95,7 @@ Serves the original supplied assets via HTTPS. The current app uses static, vers
 
 ## 9. Testing and verification
 - 13 unit tests for chapter clamping, keyboard-target guards (including modified shortcuts), swipe-direction detection and forward/backward page-turn direction.
-- GitHub Actions executes `npm test` and `npm run build`.
+- GitHub Actions runs on Node.js 26 LTS and executes `npm install`, `npm test` (19 tests) and `npm run build`.
 - Browser QA should cover 320px, 390px, 768px, 1024px and 1440px widths.
 - Check opening-cover interaction, page-turn direction/lock, keyboard focus, chapter index, mobile swipe and pinch zoom, reduced-motion, image loading and outbound contact link.
 - Review correctness, readability, architecture, security and performance before merging.

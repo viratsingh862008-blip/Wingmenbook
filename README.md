@@ -16,7 +16,7 @@ npm test
 npm run build
 ```
 
-GitHub Actions runs the tests and production build on pushes to `main` and `build/**`, and on pull requests targeting `main`.
+GitHub Actions runs the tests and production build on Node.js 26 LTS for pushes to `main` and `build/**`, and on pull requests targeting `main`.
 
 ## Experience
 
@@ -33,6 +33,7 @@ GitHub Actions runs the tests and production build on pushes to `main` and `buil
 - Reduced-motion support that follows the system preference and can be toggled in the interface.
 - Responsive desktop and mobile compositions.
 - Semantic HTML for all essential text, headings and controls.
+- Component-level integration tests for the cover, guided/free flow, chapter index, Escape handling and keyboard guards.
 
 There is no audio control until an approved audio asset and sound treatment are supplied. WebGL/Three.js is intentionally deferred; CSS and GSAP provide the current motion system without adding a GPU dependency prematurely.
 

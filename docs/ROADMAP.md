@@ -31,7 +31,9 @@
 - [x] Add direction-aware hinged chapter transitions and lock navigation while transitions run.
 - [x] Add GSAP progressive content reveals.
 - [x] Add system-aware and user-toggleable reduced-motion mode.
-- [x] Confirm GitHub Actions tests and the TypeScript/Vite production build pass on the latest implementation commit (13 tests).
+- [x] Add React component tests covering cover opening, guided/free mode, chapter index, Escape handling and keyboard guards.
+- [x] Move CI to Node.js 26 LTS.
+- [x] Confirm GitHub Actions helper/component tests and the TypeScript/Vite production build pass (19 tests).
 - [ ] Check preview screenshots at desktop and mobile viewports.
 
 ## Phase 3 — Signature visual refinement
@@ -50,7 +52,7 @@
 - [ ] Replace the placeholder only after portfolio evidence is approved.
 
 ## Phase 5 — Release QA
-- [x] Confirm GitHub Actions tests and TypeScript/Vite production build are green (13 tests on the latest code commit).
+- [x] Confirm GitHub Actions tests and TypeScript/Vite production build are green (19 tests on the latest code commit).
 - [ ] Complete logged-in desktop and mobile browser QA (the current preview URL is protected by Vercel SSO).
 - [ ] Check keyboard focus order, menu focus trap and screen-reader announcements.
 - [ ] Check reduced-motion behaviour.
