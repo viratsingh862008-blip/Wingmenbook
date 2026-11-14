@@ -43,6 +43,13 @@ describe("keyboard navigation guards", () => {
   it("ignores keys other than the chapter arrow keys", () => {
     expect(shouldNavigateWithKeyboard("Enter", { tagName: "MAIN" })).toBe(false);
   });
+
+  it("does not hijack arrow-key selection or modified shortcuts", () => {
+    expect(shouldNavigateWithKeyboard("ArrowRight", { tagName: "MAIN" }, { shiftKey: true })).toBe(false);
+    expect(shouldNavigateWithKeyboard("ArrowLeft", { tagName: "MAIN" }, { ctrlKey: true })).toBe(false);
+    expect(shouldNavigateWithKeyboard("ArrowLeft", { tagName: "MAIN" }, { altKey: true })).toBe(false);
+    expect(shouldNavigateWithKeyboard("ArrowLeft", { tagName: "MAIN" }, { metaKey: true })).toBe(false);
+  });
 });
 
 describe("page-turn direction", () => {
