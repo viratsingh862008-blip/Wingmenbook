@@ -1,9 +1,9 @@
 # 4WINGMEN Interactive Brand Book — Interaction Specification
 
-**Status:** Target behaviour for prototype and QA.
+**Status:** Core navigation and motion are implemented; reference-fidelity and responsive browser QA remain in progress.
 
 ## 1. Experience model
-A hybrid digital book: full-screen editorial compositions connected by book-like navigation and transitions. It should feel continuous and immersive without requiring a literal physical-page simulation on every device.
+A hybrid digital book: a centered 3D CSS cover opens on user action, then eleven full-screen editorial chapters use direction-aware hinged transitions and accessible chapter navigation. It should feel continuous and immersive without requiring a literal physical-page simulation on every device.
 
 ## 2. Navigation
 Required:
@@ -16,15 +16,15 @@ Required:
 - Correct handling of first and final chapters.
 - Prevent accidental multi-step navigation while a transition is in progress.
 
-Gesture thresholds, velocity handling and transition lock duration will be tuned during prototyping.
+The current implementation uses a conservative 60px horizontal swipe threshold, preserves vertical scrolling and pinch zoom, and locks chapter navigation while a GSAP page transition is running. Further gesture and duration tuning remains part of browser QA.
 
 ## 3. Motion and visual effects
 Reference: https://howtotalktowhitekidsaboutracism.com/
 
 Study and target the following effect families:
-- Canvas-based visual presentation.
-- Layered parallax and perceived depth.
-- Page/scene transitions with coherent movement.
+- CSS 3D book-cover opening and perceived physical depth.
+- Direction-aware hinged page/scene transitions with coherent movement.
+- Layered parallax and canvas-based visual presentation remain candidate enhancements if they prove necessary after comparison.
 - Image displacement or shader-based visual movement where appropriate.
 - Staggered typography and graphic reveals.
 - Responsive pointer/touch interaction.
@@ -32,20 +32,18 @@ Study and target the following effect families:
 
 The implementation must be original. Do not copy the reference site's source code, assets or written content. Exact parity cannot be promised before detailed browser testing and asset-specific prototyping; use visual and behavioural acceptance checks to measure similarity.
 
-## 4. Interaction states
-At minimum:
-- Initial loading.
-- Intro/cover ready.
-- Entering the book.
+## 4. Implemented interaction states
+The current build includes:
+- Cover ready.
+- Cover opening after explicit activation by either the book surface or its Open button.
 - Chapter idle.
-- Chapter transition forward.
-- Chapter transition backward.
-- Dragging/swiping.
-- Navigation focus.
-- Asset loading for next chapter.
-- WebGL unavailable fallback.
+- Chapter transition forward/backward.
+- Transition lock to prevent accidental multi-step navigation.
+- Pointer/touch swipe and mouse drag.
+- Chapter-index focus, Escape close and focus return.
+- Asset loading and explicit unavailable-image fallback.
 - Reduced-motion presentation.
-- Recoverable rendering error.
+- WebGL is not used by the current build; a non-WebGL fallback is therefore the baseline.
 
 ## 5. Input behaviour
 
@@ -55,13 +53,13 @@ At minimum:
 - Pointer movement may influence parallax subtly, but must not make content difficult to read.
 
 ### Touch
-- Support horizontal swipe without blocking normal vertical page scrolling where vertical scrolling is used.
+- Support horizontal swipe without blocking normal vertical page scrolling or pinch zoom.
 - Avoid gesture conflicts on small screens.
 - Provide explicit navigation controls as an alternative to gestures.
 
 ### Keyboard
 - Provide visible focus indicators.
-- Left/right arrows navigate only when focus is not inside a text input or another control that uses those keys.
+- Unmodified left/right arrows navigate only when focus is not inside a text input or another control that uses those keys; modified shortcuts and Shift+Arrow text selection remain native.
 - Enter/Space activates focused controls.
 - Escape may close chapter navigation or overlays if those are implemented.
 
@@ -91,4 +89,4 @@ A prototype passes when:
 - Resize and orientation changes are handled.
 - Reduced-motion mode is usable.
 - WebGL failure does not make the book unusable.
-- The experience is checked against reference recordings/screenshots using a documented visual review.
+- Component-level tests cover the cover activation, guided/free switching, chapter-index selection, Escape close and keyboard guards. The experience is still checked against reference recordings/screenshots using a documented visual review. The implementation branch preview is currently SSO-protected, so visual review requires an authenticated project reviewer.
