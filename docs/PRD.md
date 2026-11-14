@@ -7,7 +7,7 @@
 
 ## 1. Product summary
 
-Build a browser-based interactive agency profile for 4WINGMEN. The experience should combine a digital editorial publication with book-like navigation and cinematic transitions. It will introduce the agency, its four team members, services, working approach, selected work, and a clear way to make contact.
+Build a browser-based interactive agency profile for 4WINGMEN. The experience combines a digital editorial publication with a 3D book opening, direction-aware page transitions and chapter navigation. It will introduce the agency, its four team members, services, working approach, selected work, and a clear way to make contact.
 
 This is a brand and capability presentation, not a general-purpose agency website or a PDF viewer.
 
@@ -37,42 +37,43 @@ This is a brand and capability presentation, not a general-purpose agency websit
 | Area | Decision |
 |---|---|
 | Experience | Hybrid: editorial screens with book-like movement |
-| Visual identity | Cinematic monochrome with restrained member-specific gold, red and orange accents |
+| Visual identity | Cinematic monochrome with neutral page-level accents and restrained member-specific gold, red and orange poster accents |
 | Scope | Agency profile |
-| Motion strategy | CSS and GSAP first; WebGL deferred until a measured need is established |
+| Motion strategy | CSS 3D cover and GSAP page transitions first; WebGL deferred until a measured need is established |
 | Audience | Clients and collaborators |
 | Reference | https://howtotalktowhitekidsaboutracism.com/ |
 | Brand mark | User-supplied official 4WINGMEN logo; preserve its geometry |
 
-## 6. Proposed information architecture
+## 6. Implemented information architecture
 
-The following is the working chapter plan. Final copy and exact page count remain subject to content review.
+The current application contains eleven chapters, in this order:
 
-| Chapter | Working title | Purpose |
+| Order | Chapter | Purpose |
 |---|---|---|
-| 00 | The Cover | Establish the brand and invite entry |
-| 01 | The Introduction | Explain who 4WINGMEN is |
-| 02 | The Four | Introduce the team as a group |
-| 03 | Aryan Singh | Individual team profile |
-| 04 | Saad Gani | Individual team profile |
-| 05 | Ayush | Individual team profile |
-| 06 | Zaid Ahmad | Individual team profile |
-| 07 | What We Do | Explain verified agency services |
-| 08 | How We Work | Explain philosophy, process and execution |
-| 09 | Selected Work / Closing | Show supplied work and provide a contact action |
+| 00 | Cover | Establish the brand and invite the reader to open the book |
+| 01 | Our point of view | Explain the agency's connected-growth philosophy |
+| 02 | Why 4WINGMEN | Explain the gap the team set out to address |
+| 03 | The experience | Present business and customer experience |
+| 04 | Four disciplines | Introduce creative, technology, marketing and strategy |
+| 05 | The people | Introduce Aryan Singh, Ayush, Saad Gani and Zaid Ahmad |
+| 06 | What we do | Explain the verified agency service catalogue |
+| 07 | Our approach | Show Understand → Strategise → Create → Execute → Optimise → Grow |
+| 08 | Experience | Qualify the team's collective prior 10+ client experience |
+| 09 | Selected work | Provide an editorial placeholder pending approved portfolio assets |
+| 10 | The next move | Close with the official Instagram contact action |
 
-Team responsibilities and all factual profile details are **content dependencies**, not assumptions.
+The manuscript in `MANUSCRIPT.md` is the content source of truth. Preserve its role descriptions and factual safeguards. The team spread follows the manuscript's member order: Aryan, Ayush, Saad, Zaid.
 
 ## 7. Core experience requirements
 
-- Introductory cover and deliberate entry transition.
+- Centered 3D book cover with user-triggered opening transition.
 - Chapter/page navigation with previous and next controls.
 - Horizontal pointer/touch swipe support, with previous/next and keyboard alternatives.
 - Progress indication and clear current chapter/page state.
 - GSAP chapter transitions and progressive reveals; add depth/parallax only when it improves the experience without hurting mobile usability.
-- Choreographed typography and page transitions.
+- Direction-aware hinged page transitions, transition lock, and choreographed typography reveals.
 - Responsive layouts with mobile-specific composition.
-- Reduced-motion support. The current experience is HTML/CSS/GSAP and does not require WebGL.
+- Reduced-motion support. The current experience uses semantic HTML, CSS 3D transforms and GSAP; WebGL is not required for the first release.
 - Loading and error states for visual assets.
 
 ## 8. Quality requirements
