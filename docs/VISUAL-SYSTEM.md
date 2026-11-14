@@ -16,30 +16,48 @@ The experience combines:
 - Clear, accessible text and navigation.
 - Responsive layouts designed for mobile as a first-class experience.
 
+The supplied team posters are the visual source of truth for the brand book's colour atmosphere. Preserve their monochrome editorial base and use their individual warm accent colours as a coordinated system.
+
 ## 2. Colour system
 
-The book's approved direction remains **black, white and red**.
+The approved system is **cinematic monochrome with restrained warm accents**, not a red-only palette.
 
-- Near-black: primary canvas and dark chapter backgrounds.
-- White/off-white: primary text and light editorial pages.
-- Deep red: primary interaction and emphasis accent.
-- Neutral greys: secondary text, rules and quiet UI.
+### Core palette
+- Deep black / near-black: primary canvas and dark chapter backgrounds.
+- Charcoal: layered surfaces, shadows and depth.
+- White / warm white: primary typography and high-contrast editorial moments.
+- Silver / neutral grey: secondary typography, rules, outlines and image treatment.
 
-The gold/orange visible in some supplied social campaign creatives is treated as campaign artwork, not a reason to change the book's already-approved red accent. Do not recolour the official logo or modify supplied images to force palette consistency. Use supplied assets in their original colours where appropriate.
+### Accent palette
+- Muted metallic gold: accent drawn from Saad's poster.
+- Signal red: accent drawn from Ayush's poster.
+- Vivid orange: accent drawn from Zaid's poster.
+- Aryan's chapter remains primarily monochrome, with restrained warm highlights where needed.
+
+Use accents as chapter signatures, not as competing global colours. The overall interface should remain coherent through black, white and grey; a member's accent may appear in their name, small labels, progress markers, graphic lines or selected details. Do not apply all accent colours to every page.
+
+Approximate digital starting points (tune against the supplied original artwork during implementation):
+- Gold: #D6A33D
+- Red: #D71920
+- Orange: #F05A16
+
+These are working screen values, not instructions to recolour the original posters or logo. Sample the supplied artwork before final colour calibration.
 
 ## 3. Typography and composition
 
-- Use a high-contrast editorial display face for chapter titles and a highly legible sans-serif for body copy and navigation.
+- Use a high-impact editorial display face for chapter titles and a highly legible sans-serif for body copy and navigation.
 - Establish hierarchy through scale, spacing, alignment and cropping rather than excessive decoration.
 - Use short, deliberate text blocks and strong negative space.
 - Keep all essential text as real HTML, selectable and accessible.
 - Avoid text embedded in generated imagery.
+- Oversized outlined typography, large numerals and restrained tracking may echo the poster layouts without copying them mechanically.
 
 ## 4. Logo and photography
 
-- Use the official 4WINGMEN logo as supplied. Preserve its geometry, proportions and clear space.
+- Use the official 4WINGMEN logo as supplied. Preserve its geometry, proportions, original colours and clear space.
 - Inspect transparency/background behaviour before placing it on dark or light surfaces.
 - Use the four supplied team portraits as the actual member images. Do not substitute stock or generated portraits.
+- Preserve the photographic treatments and individual poster accents as supplied.
 - Do not retouch identities or materially alter the portraits without explicit approval.
 - Keep original source files unchanged; create derivatives only for crop/format optimisation.
 
