@@ -43,3 +43,7 @@ export function getSwipeDirection(
 
   return deltaX < 0 ? "next" : "previous";
 }
+
+export function getTransitionDirection(currentIndex: number, targetIndex: number): 1 | -1 {
+  return targetIndex >= currentIndex ? 1 : -1;
+}
