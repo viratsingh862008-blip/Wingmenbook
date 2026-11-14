@@ -174,7 +174,13 @@ function App() {
   useEffect(() => {
     if (menuOpen) {
       menuCloseRef.current?.focus();
-      return () => menuTriggerRef.current?.focus();
+      return () => {
+        if (navigationLockRef.current) {
+          stageRef.current?.focus();
+        } else {
+          menuTriggerRef.current?.focus();
+        }
+      };
     }
     return undefined;
   }, [menuOpen]);
