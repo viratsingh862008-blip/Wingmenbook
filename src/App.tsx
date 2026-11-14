@@ -177,7 +177,7 @@ function App() {
       return () => menuTriggerRef.current?.focus();
     }
     return undefined;
-  }, [menuOpen, motionReduced]);
+  }, [menuOpen]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -192,7 +192,7 @@ function App() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [menuOpen]);
+  }, [menuOpen, motionReduced]);
 
   useEffect(() => {
     document.title = (chapter.id === "cover" ? "4WINGMEN" : chapter.eyebrow + " — 4WINGMEN") + " | Ideas That Fly";
@@ -200,7 +200,7 @@ function App() {
 
   useLayoutEffect(() => {
     const stage = stageRef.current;
-    if (!stage || motionReduced) return undefined;
+    if (!stage) return undefined;
 
     if (motionReduced) {
       navigationLockRef.current = false;
