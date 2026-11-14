@@ -82,8 +82,8 @@ const chapters: Chapter[] = [
 
 const team: TeamMember[] = [
   { name: "ARYAN SINGH", role: "CHIEF TECHNOLOGY OFFICER", note: "AI-assisted technology · Digital strategy · Web & software · SEO / GEO", accent: "#d6d0c4", image: assets.aryan, tag: "THE TECHNOLOGIST" },
-  { name: "SAAD GANI", role: "POST-PRODUCTION SPECIALIST", note: "Video editing · Post-production · Visual finishing", accent: "#d6a33d", image: assets.saad, tag: "THE EDITOR" },
   { name: "AYUSH", role: "CHIEF CREATIVE OFFICER", note: "Creative production · Photography · Videography · Content ideation", accent: "#d71920", image: assets.ayush, tag: "THE CRAFTSPERSON" },
+  { name: "SAAD GANI", role: "POST-PRODUCTION SPECIALIST", note: "Video editing · Post-production · Visual finishing", accent: "#d6a33d", image: assets.saad, tag: "THE EDITOR" },
   { name: "ZAID AHMAD", role: "CHIEF STRATEGY & OPERATIONS OFFICER", note: "Strategic planning · Business discussions · Meetings · Operations", accent: "#f05a16", image: assets.zaid, tag: "THE STRATEGIST" }
 ];
 
@@ -98,16 +98,16 @@ const services = [
 ] as const;
 
 const chapterAccent: Record<ChapterKind, string> = {
-  cover: "#d6a33d",
-  manifesto: "#d6a33d",
+  cover: "#d6d0c4",
+  manifesto: "#d6d0c4",
   story: "#d71920",
-  experience: "#d6a33d",
-  disciplines: "#d6a33d",
-  people: "#d6a33d",
-  services: "#d6a33d",
-  process: "#d6a33d",
-  proof: "#d6a33d",
-  portfolio: "#d6a33d",
+  experience: "#d6d0c4",
+  disciplines: "#d6d0c4",
+  people: "#d6d0c4",
+  services: "#d6d0c4",
+  process: "#d6d0c4",
+  proof: "#d6d0c4",
+  portfolio: "#d6d0c4",
   contact: "#d71920"
 };
 
@@ -210,6 +210,7 @@ function App() {
     const target = event.target;
     if (target instanceof Element && target.closest("button, a, input, textarea, select, [contenteditable='true'], [data-no-swipe]")) return;
     pointerStart.current = { x: event.clientX, y: event.clientY, pointerId: event.pointerId };
+    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const onPointerUp = (event: ReactPointerEvent<HTMLElement>) => {
