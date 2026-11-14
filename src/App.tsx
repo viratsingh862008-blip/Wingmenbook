@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, AudioLines, BookOpen, Grid2X2, Instagram, Menu, Volume2, VolumeX, X } from "lucide-react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Instagram, Volume2, VolumeX, X } from "lucide-react";
 import { getNextChapter, getPreviousChapter } from "./lib/navigation";
 
 type Chapter = {
@@ -74,7 +74,7 @@ function App() {
   const previous = () => setActive((current) => getPreviousChapter(current));
 
   return (
-    <main className={`book-shell chapter-${chapter.kind}`} style={{ "--accent": chapter.kind === "people" ? team[active % team.length].accent : "#d6a33d" } as React.CSSProperties}>
+    <main className={`book-shell chapter-${chapter.kind}`} style={{ "--accent": chapter.kind === "people" ? team[active % team.length].accent : "#d6a33d" } as CSSProperties}>
       <div className="ambient ambient-one" /><div className="ambient ambient-two" />
       <header className="topbar">
         <a className="wordmark" href="#cover" onClick={(e) => { e.preventDefault(); go(0); }} aria-label="4WINGMEN home">
