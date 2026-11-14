@@ -1,84 +1,104 @@
 # 4WINGMEN Interactive Brand Book — Technical Architecture
 
-**Status:** Proposed architecture; confirm versions and implementation details during repository setup.
+**Status:** Implemented core architecture; refinements and release QA in progress.
 
 ## 1. Architecture goals
-- Deliver a high-quality interactive editorial experience.
-- Keep content, semantic UI and GPU rendering concerns separate.
-- Build progressively, validating one representative chapter before scaling.
-- Maintain a reliable responsive fallback for devices without suitable WebGL support.
+- Deliver an immersive editorial publication with reliable navigation.
+- Keep essential content semantic, selectable HTML.
+- Preserve original brand assets.
+- Build progressive motion without unnecessary GPU complexity.
+- Make mobile, keyboard and reduced-motion use first-class.
 
-## 2. Proposed stack
+## 2. Actual stack
 
-| Layer | Proposed technology | Responsibility |
+| Layer | Technology | Responsibility |
 |---|---|---|
-| Application | React + Vite + TypeScript | App shell, components and state |
-| Styling | Tailwind CSS + custom CSS | Layout, design tokens and responsive styling |
-| Motion | GSAP | Timelines, transitions and choreography |
-| Scroll-linked motion | GSAP ScrollTrigger, only if needed | Scroll-driven sequences |
-| Graphics | Three.js + WebGL | Canvas rendering and layered visual effects |
-| Shader effects | GLSL | Custom parallax/displacement and visual treatments |
-| Input | Pointer Events + keyboard controls | Mouse, touch and accessible navigation |
-| Deployment | Vercel | Hosting and preview/production deployment |
-| Version control | GitHub | Source history and collaboration |
+| Application | React 18 + Vite + TypeScript | Chapter shell, content and interaction state |
+| Styling | Custom CSS | Visual system, editorial layouts and responsive behaviour |
+| Motion | GSAP | Chapter transitions and progressive reveal choreography |
+| Icons | Lucide React | Interface icons |
+| Tests | Vitest | Navigation helper and input-behaviour tests |
+| Asset hosting | Cloudinary | Original team poster and logo delivery |
+| CI | GitHub Actions | Dependency install, tests and TypeScript/Vite build |
+| Deployment | Vercel | Preview and production hosting |
+| Version control | GitHub | Branches, commits, code review and CI |
 
-This is the proposed stack, not a claim that every library is required. Avoid adding dependencies until a prototype demonstrates the need.
+Three.js, WebGL, GLSL, Tailwind and ScrollTrigger are not currently required dependencies. Keep them deferred unless a documented visual or performance need justifies adding them.
 
-## 3. Separation of responsibilities
+## 3. Current source layout
+
+```
+src/
+  App.tsx                 # Chapter content, shell and UI behaviour
+  main.tsx                # React entry point
+  styles.css              # Editorial visual system and responsive layouts
+  lib/
+    navigation.ts         # Chapter clamping, keyboard guards and swipe detection
+    navigation.test.ts    # Unit tests for navigation behaviour
+docs/
+  PRD.md
+  MANUSCRIPT.md
+  STORYBOARD.md
+  VISUAL-SYSTEM.md
+  INTERACTION-SPEC.md
+  ASSET-GUIDELINES.md
+  ARCHITECTURE.md
+  ROADMAP.md
+```
+
+Keep future components and modules focused. Avoid creating abstractions or directories before a second concrete use case needs them.
+
+## 4. Separation of responsibilities
 
 ### React / HTML layer
-Owns chapter content and semantic headings, selectable text, accessible controls, current chapter state, responsive layout, non-canvas fallbacks, and loading/error/reduced-motion states.
+Owns chapter data, semantic headings, selectable text, accessible controls, current chapter state, the chapter index, image alt text, focus management, responsive structure and error states.
 
-### Three.js / WebGL layer
-Owns canvas lifecycle, renderer setup, visual scene, camera, geometry and texture management, layered image composition, shader-driven parallax and GPU resource cleanup.
+### CSS layer
+Owns the editorial layout, responsive type and spacing, visual accents, poster containment, focus visibility and no-motion fallback.
 
 ### GSAP layer
-Owns enter/exit sequences, page transition choreography, text and graphic reveals, and synchronisation between navigation state and visual transitions.
+Owns chapter enter transitions and progressive reveal effects. Every animation context is reverted on cleanup. It must not mutate the same element properties independently from React state.
 
-Avoid having React, GSAP and Three.js independently mutate the same DOM properties. Define clear ownership for animated elements.
+### Cloudinary
+Serves the original supplied assets via HTTPS. The current app uses static, versioned URLs; no API key or client-side secret is required.
 
-## 4. Proposed source layout
+## 5. Navigation and input model
+- Guided mode offers sequential previous/next navigation.
+- Free mode exposes an accessible chapter index for direct chapter selection.
+- Arrow keys navigate only when focus is not in an interactive or editable target.
+- Horizontal pointer/touch swipe has a movement threshold and ignores starts/ends on controls and links.
+- The index dialog has initial focus, Escape close, focus trapping and focus return.
+- The progress indicator exposes a numeric progress value to assistive technology.
 
-src/
-- app/ — App.tsx, routes.ts
-- components/ — BookShell, BookNavigation, ChapterLayout, ProfileChapter, ServicesChapter, LoadingScreen, ReducedMotionView
-- content/ — chapters.ts, team.ts, services.ts, projects.ts
-- hooks/ — useBookNavigation, useReducedMotion, useWebGLSupport
-- graphics/ — BookCanvas, SceneManager, AssetManager, layers, shaders
-- motion/ — timelines, transitions
-- styles/ — tokens.css, global.css
-- utils/ — imageSizing, input
+## 6. Motion and accessibility
+- Read `prefers-reduced-motion` on startup and respond to system preference changes until a manual override is chosen.
+- Expose a manual reduced-motion control.
+- Reduced-motion mode removes ambient and page animation while preserving content and navigation.
+- Audio is not enabled until an approved audio file and playback behaviour exist.
+- Do not make motion the sole way to navigate or understand content.
 
-This is a target structure, not a requirement to create every directory immediately. Keep the first prototype small.
+## 7. Assets and lifecycle
+- Use the verified Cloudinary URLs in the asset inventory.
+- Preserve poster compositions using `object-fit: contain`.
+- Lazy-load non-cover posters.
+- Keep the original logo's geometry and white circular field.
+- Provide an explicit unavailable-image state for network failures.
+- Do not add Three.js texture/geometry lifecycle until a WebGL layer is justified.
 
-## 5. Content model
-Represent chapters as typed data rather than hard-coding all copy into animation components. A chapter may include a stable ID and order, chapter label and title, body copy, layout type, image asset references and alt text, optional accent treatment, and optional motion configuration.
+## 8. Performance and resilience
+- Keep first-view work limited to the cover and its logo.
+- Lazy-load below-the-fold poster images.
+- Use a conservative transition duration and avoid continuous animation loops.
+- Keep essential copy independent of external assets.
+- Preserve the CSS/HTML experience as the baseline if future decorative WebGL is unavailable.
+- Review network and browser rendering in the Vercel preview before release.
 
-Team member data must use verified names, approved role descriptions and supplied photographs. Do not invent missing fields.
+## 9. Testing and verification
+- Unit tests for chapter clamping, keyboard-target guards and swipe-direction detection.
+- GitHub Actions executes `npm test` and `npm run build`.
+- Browser QA should cover 320px, 390px, 768px, 1024px and 1440px widths.
+- Check keyboard focus, chapter index, mobile swipe, reduced-motion, image loading and outbound contact link.
+- Review correctness, readability, architecture, security and performance before merging.
 
-## 6. Rendering and asset lifecycle
-- Load only assets needed for the current and near-next chapter where practical.
-- Use responsive image sources and optimised WebP/AVIF derivatives.
-- Use appropriate texture dimensions and GPU memory budgets.
-- Dispose of Three.js geometries, materials and textures when no longer used.
-- Handle renderer resize and device pixel ratio conservatively.
-- Detect WebGL availability before enabling the canvas experience.
-- Provide a static or CSS/HTML visual fallback when WebGL is unavailable.
-
-## 7. Performance and resilience
-- Avoid rendering at unnecessarily high device pixel ratios on mobile.
-- Pause or reduce rendering when the experience is not visible, where appropriate.
-- Avoid large blocking JavaScript and unnecessary animation loops.
-- Respect prefers-reduced-motion.
-- Handle WebGL context loss and recover gracefully where feasible.
-- Keep essential text and navigation functional without the graphics renderer.
-
-## 8. Testing
-- Unit tests for navigation state and chapter ordering.
-- Component tests for accessible controls and state changes.
-- Browser-level tests for mouse, touch, keyboard, viewport resize and reduced motion.
-- Visual comparison checks for approved reference-inspired effects.
-- Performance checks on a representative mid-range mobile device.
-
-## 9. Deployment
-Use GitHub for version control and Vercel for preview and production deployments. Configure build commands and environment variables only if later requirements introduce them. No backend or secrets are required for the initial static brand book.
+## 10. Deployment
+The Vercel project is connected to the GitHub repository. Use a build branch/preview for implementation review. Do not publish to production until CI and responsive browser QA pass. No backend, database, authentication or environment secret is required for the initial static book.

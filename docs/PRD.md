@@ -1,6 +1,6 @@
 # 4WINGMEN Interactive Brand Book — Product Requirements Document
 
-**Status:** Planning / pre-development  
+**Status:** Implementation in progress  
 **Version:** 0.1  
 **Repository:** https://github.com/viratsingh862008-blip/Wingmenbook  
 **Product:** 4WINGMEN Interactive Brand Book
@@ -37,9 +37,9 @@ This is a brand and capability presentation, not a general-purpose agency websit
 | Area | Decision |
 |---|---|
 | Experience | Hybrid: editorial screens with book-like movement |
-| Visual identity | Black, white, red |
+| Visual identity | Cinematic monochrome with restrained member-specific gold, red and orange accents |
 | Scope | Agency profile |
-| Motion strategy | Progressive implementation |
+| Motion strategy | CSS and GSAP first; WebGL deferred until a measured need is established |
 | Audience | Clients and collaborators |
 | Reference | https://howtotalktowhitekidsaboutracism.com/ |
 | Brand mark | User-supplied official 4WINGMEN logo; preserve its geometry |
@@ -67,12 +67,12 @@ Team responsibilities and all factual profile details are **content dependencies
 
 - Introductory cover and deliberate entry transition.
 - Chapter/page navigation with previous and next controls.
-- Pointer and touch gesture support, with keyboard alternatives.
+- Horizontal pointer/touch swipe support, with previous/next and keyboard alternatives.
 - Progress indication and clear current chapter/page state.
-- Layered image movement and parallax where appropriate.
+- GSAP chapter transitions and progressive reveals; add depth/parallax only when it improves the experience without hurting mobile usability.
 - Choreographed typography and page transitions.
 - Responsive layouts with mobile-specific composition.
-- Reduced-motion support and a non-WebGL fallback.
+- Reduced-motion support. The current experience is HTML/CSS/GSAP and does not require WebGL.
 - Loading and error states for visual assets.
 
 ## 8. Quality requirements
@@ -96,15 +96,12 @@ The project is ready for release when:
 - Reduced-motion and WebGL fallback paths work.
 - The production deployment is verified.
 
-## 10. Open content dependencies
+## 10. Remaining content dependencies
 
-- Confirm the exact role, responsibilities and approved profile copy for Aryan Singh, Saad Gani, Ayush and Zaid Ahmad.
-- Confirm the current service catalogue and descriptions.
-- Supply the agency story, positioning and working process.
-- Supply portfolio projects, permissions, credits and substantiated outcomes.
-- Supply contact details and desired call-to-action destination.
-- Supply original high-resolution team photographs and any separate logo variants.
+- Approved portfolio project visuals, project labels, individual attribution and permission to publish.
+- Any additional approved logo/vector variant, if the team wants one beyond the supplied original mark.
+- Any optional audio asset and sound direction, before audio controls are introduced.
 
 ## 11. Delivery approach
 
-Plan first, then build a single representative interaction prototype. Validate its visual and interaction quality before extending the system across all chapters. See `ARCHITECTURE.md`, `INTERACTION-SPEC.md` and `ROADMAP.md`.
+Planning, manuscript, storyboard and visual-system documentation are in place. The current build implements the core chapter experience and verified team assets; see `ROADMAP.md` for QA and release gates. See `ARCHITECTURE.md` and `INTERACTION-SPEC.md` for implementation detail.
