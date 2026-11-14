@@ -24,7 +24,8 @@ import {
   getPreviousChapter,
   getSwipeDirection,
   shouldNavigateWithKeyboard,
-  clampChapterIndex
+  clampChapterIndex,
+  getTransitionDirection
 } from "./lib/navigation";
 
 type ChapterKind =
@@ -121,6 +122,7 @@ function App() {
   const [isGuided, setIsGuided] = useState(true);
   const [motionReduced, setMotionReduced] = useState(prefersReducedMotion);
   const [motionOverride, setMotionOverride] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const chapter = chapters[active];
   const progress = ((active + 1) / chapters.length) * 100;
@@ -128,14 +130,28 @@ function App() {
   const menuTriggerRef = useRef<HTMLButtonElement | null>(null);
   const menuCloseRef = useRef<HTMLButtonElement | null>(null);
   const pointerStart = useRef<{ x: number; y: number; pointerId: number } | null>(null);
+  const activeIndexRef = useRef(active);
+  const navigationLockRef = useRef(false);
+  const transitionDirection = useRef<1 | -1>(1);
+  activeIndexRef.current = active;
 
-  const go = (index: number) => {
-    setActive(clampChapterIndex(index, chapters.length));
+  const navigateTo = (index: number) => {
+    const target = clampChapterIndex(index, chapters.length);
     setMenuOpen(false);
+    if (target === activeIndexRef.current || navigationLockRef.current) return;
+
+    transitionDirection.current = getTransitionDirection(activeIndexRef.current, target);
+    activeIndexRef.current = target;
+    if (!motionReduced) {
+      navigationLockRef.current = true;
+      setIsTransitioning(true);
+    }
+    setActive(target);
   };
 
-  const next = () => setActive((current) => getNextChapter(current, chapters.length));
-  const previous = () => setActive((current) => getPreviousChapter(current));
+  const go = (index: number) => navigateTo(index);
+  const next = () => navigateTo(getNextChapter(activeIndexRef.current, chapters.length));
+  const previous = () => navigateTo(getPreviousChapter(activeIndexRef.current));
 
   const toggleReadingMode = () => {
     if (!isGuided) setMenuOpen(false);
@@ -161,11 +177,11 @@ function App() {
       return () => menuTriggerRef.current?.focus();
     }
     return undefined;
-  }, [menuOpen]);
+  }, [menuOpen, motionReduced]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if (menuOpen) return;
+      if (menuOpen || navigationLockRef.current) return;
       const target = event.target instanceof HTMLElement ? event.target : null;
       if (!shouldNavigateWithKeyboard(event.key, target)) return;
 
@@ -186,11 +202,35 @@ function App() {
     const stage = stageRef.current;
     if (!stage || motionReduced) return undefined;
 
+    if (motionReduced) {
+      navigationLockRef.current = false;
+      setIsTransitioning(false);
+      return undefined;
+    }
+
+    const direction = transitionDirection.current;
     const context = gsap.context(() => {
       gsap.fromTo(
         stage,
-        { autoAlpha: 0, y: 22, rotateX: 1.2 },
-        { autoAlpha: 1, y: 0, rotateX: 0, duration: 0.62, ease: "power3.out", clearProps: "transform" }
+        {
+          autoAlpha: 0,
+          x: direction === 1 ? 12 : -12,
+          rotateY: direction === 1 ? -7 : 7,
+          transformPerspective: 1500,
+          transformOrigin: direction === 1 ? "left center" : "right center"
+        },
+        {
+          autoAlpha: 1,
+          x: 0,
+          rotateY: 0,
+          duration: 0.72,
+          ease: "power3.out",
+          clearProps: "transform",
+          onComplete: () => {
+            navigationLockRef.current = false;
+            setIsTransitioning(false);
+          }
+        }
       );
       const reveals = stage.querySelectorAll(".reveal");
       if (reveals.length > 0) {
@@ -284,6 +324,7 @@ function App() {
               type="button"
               ref={menuTriggerRef}
               onClick={() => setMenuOpen(true)}
+              disabled={isTransitioning}
               aria-label="Open chapter index"
               aria-haspopup="dialog"
               aria-expanded={menuOpen}
@@ -324,7 +365,7 @@ function App() {
           <span>{chapter.eyebrow}</span>
           <span>{String(active + 1).padStart(2, "0")} <b>/</b> {String(chapters.length).padStart(2, "0")}</span>
         </div>
-        {chapter.kind === "cover" && <Cover onBegin={next} />}
+        {chapter.kind === "cover" && <Cover onBegin={next} reducedMotion={motionReduced} />}
         {chapter.kind === "people" && <People />}
         {chapter.kind === "services" && <Services />}
         {chapter.kind === "disciplines" && <Disciplines />}
@@ -339,7 +380,7 @@ function App() {
         <div className="bottom-left">
           <span className="tiny-dot" aria-hidden="true" />
           <span>{isGuided ? "GUIDED READING" : "FREE EXPLORATION"}</span>
-          <button className="mode-toggle" type="button" onClick={toggleReadingMode}>
+          <button className="mode-toggle" type="button" onClick={toggleReadingMode} disabled={isTransitioning}>
             {isGuided ? "SWITCH TO FREE" : "SWITCH TO GUIDED"}
           </button>
         </div>
@@ -349,10 +390,10 @@ function App() {
           <span>{String(chapters.length).padStart(2, "0")}</span>
         </div>
         <div className="bottom-right">
-          <button className="nav-button" type="button" onClick={previous} disabled={active === 0} aria-label="Previous chapter">
+          <button className="nav-button" type="button" onClick={previous} disabled={active === 0 || isTransitioning} aria-label="Previous chapter">
             <ArrowLeft size={17} />
           </button>
-          <button className="next-button" type="button" onClick={next} disabled={active === chapters.length - 1}>
+          <button className="next-button" type="button" onClick={next} disabled={active === chapters.length - 1 || isTransitioning}>
             {active === chapters.length - 1 ? "END" : "NEXT"} <ArrowRight size={17} />
           </button>
         </div>
@@ -398,22 +439,53 @@ function App() {
   );
 }
 
-function Cover({ onBegin }: { onBegin: () => void }) {
+function Cover({ onBegin, reducedMotion }: { onBegin: () => void; reducedMotion: boolean }) {
+  const frontRef = useRef<HTMLDivElement | null>(null);
+  const [opening, setOpening] = useState(false);
+
+  const openBook = () => {
+    if (opening) return;
+    if (reducedMotion || !frontRef.current) {
+      onBegin();
+      return;
+    }
+
+    setOpening(true);
+    gsap.to(frontRef.current, {
+      rotateY: -154,
+      duration: 1.05,
+      ease: "power3.inOut",
+      transformOrigin: "left center",
+      onComplete: onBegin
+    });
+  };
+
   return (
     <div className="cover-layout">
-      <div className="cover-ghost" aria-hidden="true">4</div>
-      <div className="cover-copy">
-        <div className="cover-brandmark"><img src={assets.logo} alt="" /></div>
-        <p className="kicker">A DIFFERENT KIND OF AGENCY</p>
-        <h1>IDEAS THAT<br /><em>FLY.</em></h1>
-        <h2>BRANDS THAT <span>GROW.</span></h2>
-        <button className="begin-button" type="button" onClick={onBegin}>
-          ENTER THE EXPERIENCE <ArrowUpRight size={19} />
-        </button>
+      <div className="cover-stage-kicker">4W / AN INTERACTIVE BRAND BOOK</div>
+      <div className="cover-book-scene">
+        <div className="cover-book" aria-label="A closed 4WINGMEN brand book">
+          <div className="cover-book-back" aria-hidden="true" />
+          <div className="cover-book-pages" aria-hidden="true" />
+          <div className="cover-book-spine" aria-hidden="true" />
+          <div className="cover-book-front" ref={frontRef}>
+            <div className="cover-front-rule" />
+            <img src={assets.logo} alt="4WINGMEN official logo" />
+            <p className="cover-book-kicker">INTEGRATED GROWTH AGENCY</p>
+            <h1>4WINGMEN</h1>
+            <p className="cover-book-title">IDEAS THAT <em>FLY.</em></p>
+            <span className="cover-book-tagline">OWN THE SCENE. STAY SUPREME.</span>
+            <span className="cover-book-edition">EST. / 04</span>
+          </div>
+        </div>
       </div>
-      <div className="cover-side-note">MARKETING <b>·</b> STRATEGY <b>·</b> CREATIVITY <b>·</b> GROWTH</div>
-      <div className="cover-stamp"><span>4</span><small>WING<br />MEN</small></div>
-      <div className="cover-bottom"><span>AN INTERACTIVE BRAND BOOK</span><span>OWN THE SCENE. STAY SUPREME.</span></div>
+      <div className="cover-lower">
+        <p>CREATIVE / TECHNOLOGY / MARKETING / STRATEGY</p>
+        <button className="begin-button" type="button" onClick={openBook} disabled={opening}>
+          {opening ? "OPENING..." : "OPEN THE BOOK"} <ArrowUpRight size={19} />
+        </button>
+        <span>4WINGMEN · 2026</span>
+      </div>
     </div>
   );
 }
