@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
-import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Instagram, Volume2, VolumeX, X } from "lucide-react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Grid2X2, Instagram, X } from "lucide-react";
 import { getNextChapter, getPreviousChapter } from "./lib/navigation";
 
 type Chapter = {
@@ -27,10 +27,10 @@ const chapters: Chapter[] = [
 ];
 
 const team = [
-  { name: "ARYAN SINGH", role: "CHIEF TECHNOLOGY OFFICER", note: "AI-assisted technology · Digital strategy · Web & software · SEO / GEO", accent: "#d6a33d", image: "/assets/aryan.jpg", tag: "THE TECHNOLOGIST" },
-  { name: "SAAD GANI", role: "POST-PRODUCTION SPECIALIST", note: "Video editing · Post-production · Visual finishing", accent: "#d6a33d", image: "/assets/saad.jpg", tag: "THE EDITOR" },
-  { name: "AYUSH", role: "CHIEF CREATIVE OFFICER", note: "Creative production · Photography · Videography · Content ideation", accent: "#d71920", image: "/assets/ayush.jpg", tag: "THE CRAFTSPERSON" },
-  { name: "ZAID AHMAD", role: "CHIEF STRATEGY & OPERATIONS OFFICER", note: "Strategic planning · Business discussions · Meetings · Operations", accent: "#f05a16", image: "/assets/zaid.jpg", tag: "THE STRATEGIST" }
+  { name: "ARYAN SINGH", role: "CHIEF TECHNOLOGY OFFICER", note: "AI-assisted technology · Digital strategy · Web & software · SEO / GEO", accent: "#d71920", image: "https://res.cloudinary.com/roq8nakt/image/upload/f_auto,q_auto,w_900,c_limit/4wingmen/brand-book/aryan-singh.jpg", tag: "THE TECHNOLOGIST" },
+  { name: "SAAD GANI", role: "POST-PRODUCTION SPECIALIST", note: "Video editing · Post-production · Visual finishing", accent: "#d71920", image: "https://res.cloudinary.com/roq8nakt/image/upload/f_auto,q_auto,w_900,c_limit/4wingmen/brand-book/saad-gani.jpg", tag: "THE EDITOR" },
+  { name: "AYUSH", role: "CHIEF CREATIVE OFFICER", note: "Creative production · Photography · Videography · Content ideation", accent: "#d71920", image: "https://res.cloudinary.com/roq8nakt/image/upload/f_auto,q_auto,w_900,c_limit/4wingmen/brand-book/ayush.jpg", tag: "THE CRAFTSPERSON" },
+  { name: "ZAID AHMAD", role: "CHIEF STRATEGY & OPERATIONS OFFICER", note: "Strategic planning · Business discussions · Meetings · Operations", accent: "#d71920", image: "https://res.cloudinary.com/roq8nakt/image/upload/f_auto,q_auto,w_900,c_limit/4wingmen/brand-book/zaid-ahmad.jpg", tag: "THE STRATEGIST" }
 ];
 
 const services = [
@@ -46,8 +46,8 @@ const services = [
 function App() {
   const [active, setActive] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
   const [isGuided, setIsGuided] = useState(true);
+  const touchStart = useRef<{x:number;y:number}|null>(null);
   const chapter = chapters[active];
   const progress = useMemo(() => Math.round(((active + 1) / chapters.length) * 100), [active]);
 
@@ -59,6 +59,8 @@ function App() {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("button,a,input,textarea,select,[contenteditable=true]")) return;
       if (event.key === "ArrowRight" && !menuOpen) setActive((current) => getNextChapter(current, chapters.length));
       if (event.key === "ArrowLeft" && !menuOpen) setActive((current) => getPreviousChapter(current));
     };
@@ -91,7 +93,7 @@ function App() {
 
       <div className="progress-track"><span style={{ width: `${progress}%` }} /></div>
 
-      <section className="stage" key={chapter.id}>
+      <section className="stage" key={chapter.id} onTouchStart={(event) => { const t=event.changedTouches[0]; touchStart.current={x:t.clientX,y:t.clientY}; }} onTouchEnd={(event) => { if(!touchStart.current) return; const t=event.changedTouches[0]; const dx=t.clientX-touchStart.current.x; const dy=t.clientY-touchStart.current.y; touchStart.current=null; if(Math.abs(dx)>65 && Math.abs(dx)>Math.abs(dy)*1.25) setActive((current)=>dx<0?getNextChapter(current,chapters.length):getPreviousChapter(current)); }}>
         <div className="chapter-meta"><span>{chapter.eyebrow}</span><span>{String(active + 1).padStart(2, "0")} <b>/</b> {String(chapters.length).padStart(2, "0")}</span></div>
         {chapter.kind === "cover" && <Cover onBegin={next} />}
         {chapter.kind === "people" && <People />}
@@ -124,7 +126,7 @@ function App() {
 
 function Cover({ onBegin }: { onBegin: () => void }) {
   return <div className="cover-layout">
-    <div className="cover-ghost">4</div>
+    <div className="cover-ghost">4</div>\n    <img className="cover-logo" src="https://res.cloudinary.com/roq8nakt/image/upload/f_auto,q_auto,w_420/4wingmen/brand-book/4wingmen-logo.png" alt="4WINGMEN official logo" />
     <div className="cover-copy"><p className="kicker">A DIFFERENT KIND OF AGENCY</p><h1>IDEAS THAT<br /><em>FLY.</em></h1><h2>BRANDS THAT <span>GROW.</span></h2>
       <button className="begin-button" onClick={onBegin}>ENTER THE EXPERIENCE <ArrowUpRight size={19} /></button>
     </div>
